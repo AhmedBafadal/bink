@@ -1,37 +1,29 @@
-# 1. Read in the attached file
-# a. Produce a list sorted by “Current Rent” in ascending order
-# b. Obtain the first 5 items from the resultant list and output to the console
-# 2. From the list of all mast data, create a new list of mast data with “Lease Years” = 25
-# years.
-
-# PYTHON DEVELOPER TEST
-
-# a. Output the list to the console, including all data fields
-# b. Output the total rent for all items in this list to the console
-# 3. Create a dictionary containing tenant name and a count of masts for each tenant
-# a. Output the dictionary to the console in a readable form
-# 4. List the data for rentals with “Lease Start Date” between 1st June 1999 and 31st
-# August 2007
-# a. Output the data to the console with dates formatted as DD/MM/YYYY
 from functools import reduce
 from operator import add
 import csv
 from datetime import datetime
 
 
+
+
 def csv_reader(doc_csv):
+    """Read Csv File"""
     new_csv = []
     with open(doc_csv) as f:
         reader = csv.reader(f, delimiter=',')
         new_csv = list(reader).copy()
         return new_csv
 
-def read_csv(file_path):
+def proc_csv(file_path):
+    """Process Csv file based on user input"""
     key = int(input('Options please enter a number from the following: (1. "Current Rent" in ascending order), (2. Obtain first 5 items of "Current Rent"), (3. Mast data with "Lease Years" = 25 years), (4. Total rent for all items in mast data = 25 years), (5. Tenant name and count of masts for each tenant), (6. Rentals with "Lease Start Date" between start of June 99 and end of August 2007), (0 to exit):\n'))
     cols = []
     if key == 0:
+        # If user enters 0, exit
         return
+    
     elif key == 1:
+        # If user enters 1, output all data
         new_csv = csv_reader(file_path)
         for ind, row in enumerate(new_csv):
             if ind == 0:
@@ -44,6 +36,7 @@ def read_csv(file_path):
         return final_output
 
     elif key == 2:
+        # If user enters 2, output first 5
         new_csv = csv_reader(file_path)
         for ind, row in enumerate(new_csv):
             if ind == 0:
@@ -56,6 +49,7 @@ def read_csv(file_path):
         return final_output[0:6]
     
     elif key == 3:
+        # If user enters 3, output leases = 25
         lease_over_25 = []
         new_csv = csv_reader(file_path)
         for ind, row in enumerate(new_csv):
@@ -68,6 +62,7 @@ def read_csv(file_path):
         return lease_over_25
     
     elif key == 4:
+        # If user enters 4, output total of lease = 25
         total_rent_list = []
         new_csv = csv_reader(file_path)
         rent_list = [float(row[10]) for row in new_csv[1:] if row[9] == '25']
@@ -78,6 +73,7 @@ def read_csv(file_path):
        
     
     elif key == 5:
+        # If user enters 5, output dictionary of tenant name and mast count
         mast_dict = {}
         tenant_set = set()
 
@@ -100,6 +96,7 @@ def read_csv(file_path):
     
     
     elif key == 6:
+        # If user enters 6, output rentals with lease date between June 99 and August 07
         date_list = []
         cols = []
         june = datetime.strptime('1 June 1999', '%d %B %Y')
@@ -128,5 +125,5 @@ def read_csv(file_path):
  
         
 if __name__ == '__main__':
-    read_csv('Python Developer Test Dataset.csv')
+    proc_csv('Python Developer Test Dataset.csv')
     
